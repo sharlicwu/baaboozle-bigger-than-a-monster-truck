@@ -624,16 +624,17 @@ function doAction(c, i){
 
   switch(c.kind){
     case "first": {
-      /* 🥇 jump to the leader's score — already leading? take a +10 bonus instead */
+      /* 🥇 score = leader's score + 10 — always beats every other team */
       const max = Math.max.apply(null, TEAMS.map(t=>t.score));
+      const target = max + 10;
       if(team.score >= max){
-        team.score += 10; sfxFirst();
+        team.score = target; sfxFirst();
         setStatus('🥇 <b>'+team.name+'</b> already leads! +10 bonus');
         result('🥇 <b>'+team.name+'</b> is already in first place → <b>+10 bonus</b> → <b>'+team.score+'</b>'); finish();
       }else{
-        team.score = max; sfxFirst();
-        setStatus('🥇 <b>'+team.name+'</b> takes first place with '+max+' points!');
-        result('🥇 <b>'+team.name+'</b> jumps to <b>first place</b> with <b>'+max+' points</b>!'); finish();
+        team.score = target; sfxFirst();
+        setStatus('🥇 <b>'+team.name+'</b> takes first place with '+target+' points!');
+        result('🥇 <b>'+team.name+'</b> jumps to <b>first place</b> with <b>'+target+' points</b> — <b>10 more than everyone else</b>!'); finish();
       }
       break;
     }
